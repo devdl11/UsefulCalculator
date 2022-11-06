@@ -22,9 +22,19 @@ enum TokenType {
     INT_TYPE,
     DOUBLE_TYPE,
     MATH_TYPE,
+    PARENTHESES_TYPE,
     INVALID_TYPE
 };
 
+enum TokenMetaType {
+    NONE,
+    DEPTH,
+};
+
+enum TokenLevel {
+    BASIC,
+    ADVANCED,
+};
 
 class Token {
     public:
@@ -33,6 +43,7 @@ class Token {
 
         // i Here we analyze our token string and set our properties
         void analyze();
+        virtual const TokenLevel getLevel() const { return TokenLevel::BASIC; }
         
         const std::string getString() const { return m_str; };
         TokenType getType() { return m_type; }
@@ -45,6 +56,26 @@ class Token {
         TokenType m_type;
 };
 
+struct TokenMeta {
+    TokenMetaType type;
+    int value;
+};
+
+class AdvancedToken : public Token {
+    public:
+        AdvancedToken() : AdvancedToken("", -1) {};
+        AdvancedToken(const std::string s, int i) : Token(s, i) {};
+
+        virtual const TokenLevel getLevel() const override { return TokenLevel::ADVANCED; }
+
+        void addMeta(TokenMetaType t, int v);
+        bool hasMeta(TokenMetaType t);
+        int getMeta(TokenMetaType t);
+
+    private:
+        std::vector<TokenMeta> m_meta;
+};
+
 struct PosiToken {
     std::string::iterator begin;
     std::string::iterator end;
@@ -53,14 +84,17 @@ struct PosiToken {
 class Expression {
     public:
         Expression() : m_isValid(false) {};
-        Expression(std::vector<Token> token_list) : m_isValid(true), m_tokens(token_list) {}
+        Expression(std::vector<Token *> token_list, bool hasParen) : m_isValid(true), m_hasParentheses(hasParen), m_tokens(token_list) {}
+
+        ~Expression();
 
         bool isValid() const { return m_isValid; } 
-        const std::vector<Token> getTokens() const { return m_tokens; }; 
+        const std::vector<Token *> getTokens() { return m_tokens; }; 
 
     private:
         const bool m_isValid;
-        const std::vector<Token> m_tokens;
+        bool m_hasParentheses;
+        std::vector<Token *> m_tokens;
 
 };
 

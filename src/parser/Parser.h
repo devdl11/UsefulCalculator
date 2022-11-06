@@ -22,13 +22,13 @@ namespace Parser {
         void double_power(double number, int power);
         void double_sqrt(double number);
         
-        bool executeCommand(Expression exp);
+        bool executeCommand(Expression & exp);
         bool hasPriority(const char & c);
         OperationType getOperationType(const char & c);
         double executeOperation(double a, double b, OperationType t);
     }
 
-    void parseExpression(Expression exp);
+    void parseExpression(Expression & exp);
 }
 
 

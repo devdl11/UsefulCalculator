@@ -12,11 +12,18 @@ namespace ASCII
         Comma,
         Dot,
         BoolSymbol,
+        SimpleParenthesis,
         Other
     };
 
+    enum ParenthesisType {
+        Open,
+        Close
+    };
+
     CharType getCharType(const char & c);
-    
+    ParenthesisType getParenthesisType(const char & c);
+
     char toUpper(const char & c);
     char toLower(const char & c);
 

@@ -6,8 +6,10 @@ namespace ASCII {
 
     CharType getCharType(const char & c) {
         // i We just use the ascii table
-        if (c <= ')') {
-            return CharType::Other; 
+        if (c <= '\'') {
+            return CharType::Other;
+        } else if (c <= ')') {
+            return CharType::SimpleParenthesis; 
         } else if (c == ',') {
             return CharType::Comma;
         } else if (c == '.') {
@@ -30,6 +32,15 @@ namespace ASCII {
             return CharType::Letter;
         } else {
             return CharType::Other;
+        }
+    }
+
+    ParenthesisType getParenthesisType(const char & c) {
+        // ! We suppose that the input is a simple parenthesis !
+        if (c == ')') {
+            return ParenthesisType::Close;
+        } else {
+            return ParenthesisType::Open;
         }
     }
 

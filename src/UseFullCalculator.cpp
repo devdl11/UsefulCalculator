@@ -17,7 +17,7 @@ int main() {
         Expression expression = lexer.getInput();
         if (not expression.isValid()) {
             cout << TEXT::ERR_INVALID_EXPRESSION << endl;
-        } else if (expression.getTokens().front().getString() == "exit") {
+        } else if (expression.getTokens().front()->getString() == "exit") {
             running = false;
         } else {
             Parser::parseExpression(expression);
