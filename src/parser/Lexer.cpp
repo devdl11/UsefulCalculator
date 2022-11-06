@@ -155,8 +155,6 @@ Expression Lexer::getInput() {
         input.erase(input.end() - 1);
     }
 
-    std::cout << input << std::endl;
-
     std::vector<PosiToken> token_pos = getTokensPosition(input);
     std::vector<Token *> tokens;
 

@@ -188,10 +188,8 @@ namespace Parser {
 
                 // Let's check now if it's a correct math input
                 bool mustBeMath = false;
-                std::cout << "Subtokens: " << std::endl;
 
                 for(Token * t : subTokens) {
-                    std::cout << t->getString() << std::endl;
                     // i We can combine all the if in a unique expression, but it will be too ugly for our eyes x)
                     if (mustBeMath && t->getType() != TokenType::MATH_TYPE) {
                         std::cout << TEXT::ERR_INVALID_MATH << std::endl;
@@ -207,12 +205,6 @@ namespace Parser {
 
                 int subindex = -1;
                 while (subTokens.size() > 1) {
-                    std::cout << "Solving sub-expression : ";
-                    for (Token * t : subTokens) {
-                        std::cout << t->getString() << " ";
-                    }
-                    std::cout << std::endl;
-
                     for (Token * t : subTokens) {
                         subindex ++;
                         if (t->getType() != TokenType::MATH_TYPE) continue;
@@ -236,8 +228,6 @@ namespace Parser {
                     }
                     subindex = -1;
                 }
-                std::cout << "Result : " << result << std::endl;
-
                 tokens.insert(tokens.begin() + openIndex, subTokens.back());
                 if (openIndex > 0 and tokens.size() > 1 and (tokens[openIndex]->getType() == TokenType::INT_TYPE or tokens[openIndex]->getType() == TokenType::DOUBLE_TYPE) and (tokens[openIndex-1]->getType() == TokenType::INT_TYPE or tokens[openIndex-1]->getType() == TokenType::DOUBLE_TYPE)) {
                     tokens.insert(tokens.begin() + openIndex, new Token("*", lastIndex++));
