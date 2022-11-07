@@ -44,7 +44,7 @@ namespace Parser {
                     std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
                     return true;
                 }
-                Token * argument = tokens[1];
+                Token * argument = tokens.at(1);
                 if (argument->getType() == TokenType::STR_TYPE) {
                     upper(argument->getString());
                     return true;
@@ -54,7 +54,7 @@ namespace Parser {
                     std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
                     return true;
                 }
-                Token * argument = tokens[1];
+                Token * argument = tokens.at(1);
                 if (argument->getType() == TokenType::STR_TYPE) {
                     lower(argument->getString());
                     return true;
@@ -64,8 +64,8 @@ namespace Parser {
                     std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
                     return true;
                 }
-                Token * number = tokens[1];
-                Token * power = tokens[2];
+                Token * number = tokens.at(1);
+                Token * power = tokens.at(2);
                 if (power->getType() != TokenType::INT_TYPE) {
                     std::cout << "! Invalid power type !" << std::endl;
                     return true;
@@ -87,7 +87,7 @@ namespace Parser {
                     std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
                     return true;
                 }
-                Token * number = tokens[1];
+                Token * number = tokens.at(1);
                 if (number->getType() != TokenType::INT_TYPE and number->getType() != TokenType::DOUBLE_TYPE) {
                     return false;
                 }
@@ -175,9 +175,9 @@ namespace Parser {
         size_t index = 0;
 
         while(tokens.size() > 1) {
-            if (tokens[index]->getType() == TokenType::PARENTHESES_TYPE && ASCII::getParenthesisType(tokens[index]->getString()[0]) == ASCII::ParenthesisType::Open) {
+            if (tokens.at(index)->getType() == TokenType::PARENTHESES_TYPE && ASCII::getParenthesisType(tokens.at(index)->getString().at(0)) == ASCII::ParenthesisType::Open) {
                 paraStack.push_back(index);
-            } else if (tokens[index]->getType() == TokenType::PARENTHESES_TYPE && ASCII::getParenthesisType(tokens[index]->getString()[0]) == ASCII::ParenthesisType::Close) {
+            } else if (tokens.at(index)->getType() == TokenType::PARENTHESES_TYPE && ASCII::getParenthesisType(tokens.at(index)->getString().at(0)) == ASCII::ParenthesisType::Close) {
                 size_t openIndex = paraStack.back();
                 paraStack.pop_back();
                 std::vector<Token *> subTokens = std::vector<Token *>(tokens.begin() + openIndex + 1, tokens.begin() + index);
@@ -197,7 +197,7 @@ namespace Parser {
                     } else if (!mustBeMath && t->getType() != TokenType::DOUBLE_TYPE && t->getType() != TokenType::INT_TYPE) {
                         std::cout << TEXT::ERR_INVALID_MATH << std::endl;
                         return;
-                    } else if (t->getType() == TokenType::MATH_TYPE && hasPriority(t->getString()[0])) {
+                    } else if (t->getType() == TokenType::MATH_TYPE && hasPriority(t->getString().at(0))) {
                         priorityCount ++;
                     }
                     mustBeMath = !mustBeMath;
@@ -209,12 +209,12 @@ namespace Parser {
                         subindex ++;
                         if (t->getType() != TokenType::MATH_TYPE) continue;
                         if (priorityCount > 0) {
-                            if (!hasPriority(t->getString()[0])) continue;
+                            if (!hasPriority(t->getString().at(0))) continue;
                             priorityCount --;
                         }
-                        Token * first = subTokens[subindex - 1];
-                        Token * second = subTokens[subindex + 1];
-                        OperationType op = getOperationType(subTokens[subindex]->getString()[0]);
+                        Token * first = subTokens.at(subindex - 1);
+                        Token * second = subTokens.at(subindex + 1);
+                        OperationType op = getOperationType(subTokens.at(subindex)->getString().at(0));
                         result = executeOperation(ASCII::toDouble(first->getString()), ASCII::toDouble(second->getString()), op);
 
                         for (char i = 0; i < 3; i ++) {
@@ -229,9 +229,9 @@ namespace Parser {
                     subindex = -1;
                 }
                 tokens.insert(tokens.begin() + openIndex, subTokens.back());
-                if (openIndex > 0 and tokens.size() > 1 and (tokens[openIndex]->getType() == TokenType::INT_TYPE or tokens[openIndex]->getType() == TokenType::DOUBLE_TYPE) and (tokens[openIndex-1]->getType() == TokenType::INT_TYPE or tokens[openIndex-1]->getType() == TokenType::DOUBLE_TYPE)) {
+                if (openIndex > 0 and tokens.size() > 1 and (tokens.at(openIndex)->getType() == TokenType::INT_TYPE or tokens.at(openIndex)->getType() == TokenType::DOUBLE_TYPE) and (tokens.at(openIndex-1)->getType() == TokenType::INT_TYPE or tokens.at(openIndex-1)->getType() == TokenType::DOUBLE_TYPE)) {
                     tokens.insert(tokens.begin() + openIndex, new Token("*", lastIndex++));
-                    tokens[openIndex]->analyze();
+                    tokens.at(openIndex)->analyze();
                 }
                 index = openIndex;
             }

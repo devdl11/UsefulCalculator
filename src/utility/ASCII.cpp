@@ -61,10 +61,10 @@ namespace ASCII {
     }
 
     int toInt(std::string s) {
-        CharType first_char = getCharType(s[0]);
+        CharType first_char = getCharType(s.at(0));
         bool isPositive = true;
         int result = 0;
-        if (first_char == CharType::MathSymbol && s[0] == '-') {
+        if (first_char == CharType::MathSymbol && s.at(0) == '-') {
             isPositive = false;
             s.erase(s.begin());
         } else if (first_char != CharType::Digit) {
@@ -74,17 +74,17 @@ namespace ASCII {
         // Normally this function isn't safe, but we already took care of that with the lexer
         size_t max = strlen(s.c_str());
         for (size_t index = 0; index < max; index ++) {
-            result += (s[index] - '0') * pow(10, max - index - 1);
+            result += (s.at(index) - '0') * pow(10, max - index - 1);
         }
 
         return isPositive ? result : -result;
     }
 
     double toDouble(std::string s) {
-        CharType first_char = getCharType(s[0]);
+        CharType first_char = getCharType(s.at(0));
         bool isPositive = true;
         double result = 0;
-        if (first_char == CharType::MathSymbol && s[0] == '-') {
+        if (first_char == CharType::MathSymbol && s.at(0) == '-') {
             isPositive = false;
             s.erase(s.begin());
         } else if (first_char != CharType::Digit) {
@@ -99,7 +99,7 @@ namespace ASCII {
             sepIndex = s.find(',');
         }
 
-        if (sepIndex == std::string::npos && s[0] != '.' && s[0] != ',') {
+        if (sepIndex == std::string::npos && s.at(0) != '.' && s.at(0) != ',') {
             hasSep = false;
         }
 
@@ -109,9 +109,9 @@ namespace ASCII {
                     result *= 0.1;
                     continue;
                 }
-                result += (s[index] - '0') * pow(10, sepIndex - index);
+                result += (s.at(index) - '0') * pow(10, sepIndex - index);
             } else {
-                result += (s[index] - '0') * pow(10, max - index - 1);
+                result += (s.at(index) - '0') * pow(10, max - index - 1);
             }
         }
 

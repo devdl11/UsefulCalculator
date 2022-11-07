@@ -50,11 +50,11 @@ void Token::analyze() {
 
     if (hasParen && parenCount == 1 && m_chars.size() == 1) {
         m_type = TokenType::PARENTHESES_TYPE;
-    } else if (hasLetters && !hasMaths && !hasOther && !hasSep && !hasBool && !hasParen && (!hasDigits || m_chars[0] == ASCII::CharType::Letter)) {
+    } else if (hasLetters && !hasMaths && !hasOther && !hasSep && !hasBool && !hasParen && (!hasDigits || m_chars.at(0) == ASCII::CharType::Letter)) {
         m_type = TokenType::STR_TYPE;
-    } else if (hasDigits && !hasLetters && !hasOther && !hasSep && !hasBool && !hasParen && (!hasMaths || (m_chars[0] == ASCII::CharType::MathSymbol && mathCount == 1))) {
+    } else if (hasDigits && !hasLetters && !hasOther && !hasSep && !hasBool && !hasParen && (!hasMaths || (m_chars.at(0) == ASCII::CharType::MathSymbol && mathCount == 1))) {
         m_type = TokenType::INT_TYPE;
-    } else if (hasDigits && !hasLetters && !hasOther && hasSep && sepCount == 1 && !hasBool && !hasParen && (!hasMaths || (m_chars[0] == ASCII::CharType::MathSymbol && mathCount == 1))) {
+    } else if (hasDigits && !hasLetters && !hasOther && hasSep && sepCount == 1 && !hasBool && !hasParen && (!hasMaths || (m_chars.at(0) == ASCII::CharType::MathSymbol && mathCount == 1))) {
         m_type = TokenType::DOUBLE_TYPE;
     } else if (hasMaths && !hasLetters && !hasDigits && !hasOther && !hasSep && !hasBool && !hasParen && m_chars.size() == 1) {
         m_type = TokenType::MATH_TYPE;
@@ -182,7 +182,7 @@ Expression Lexer::getInput() {
         int depth = 0;
         for (Token * t : tokens) {
             if (t->getType() != TokenType::PARENTHESES_TYPE) continue;
-            if (ASCII::getParenthesisType(t->getString()[0]) == ASCII::ParenthesisType::Open) {
+            if (ASCII::getParenthesisType(t->getString().at(0)) == ASCII::ParenthesisType::Open) {
                 parenthesisCount ++;
                 static_cast<AdvancedToken *>(t)->addMeta(TokenMetaType::DEPTH, depth);
                 depth ++;
