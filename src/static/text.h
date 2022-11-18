@@ -9,6 +9,7 @@ namespace TEXT {
     constexpr const char* const ERR_INVALID_EXPRESSION = " ! Invalid Input !";
     constexpr const char* const ERR_FEW_ARGUMENTS = " ! Too few arguments !";
     constexpr const char* const ERR_INVALID_MATH = " ! Invalid math input !";
+    constexpr const char* const ERR_INVALID_ARGUMENT = " ! Argument doesn't match requested type !";
 }
 
 #endif

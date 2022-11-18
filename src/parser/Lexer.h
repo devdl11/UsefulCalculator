@@ -18,9 +18,9 @@
 */
 
 enum TokenType {
-    STR_TYPE,
     INT_TYPE,
     DOUBLE_TYPE,
+    STR_TYPE,
     MATH_TYPE,
     PARENTHESES_TYPE,
     INVALID_TYPE
@@ -88,11 +88,11 @@ class Expression {
 
         ~Expression();
 
-        bool isValid() const { return m_isValid; } 
+        bool isValid() { return m_isValid; } 
         const std::vector<Token *> getTokens() { return m_tokens; }; 
 
     private:
-        const bool m_isValid;
+        bool m_isValid;
         bool m_hasParentheses;
         std::vector<Token *> m_tokens;
 

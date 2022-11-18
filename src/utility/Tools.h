@@ -1,0 +1,10 @@
+
+namespace Tools {
+    // i Here we define some useful functions
+
+    template<typename Base, typename T>
+    inline bool instanceof(const T *ptr) {
+        return dynamic_cast<const Base*>(ptr) != nullptr;
+    }
+
+}

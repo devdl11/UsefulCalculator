@@ -93,14 +93,11 @@ int AdvancedToken::getMeta(TokenMetaType t) {
 
 // We need to create a destructor in order to delete the tokens we created
 Expression::~Expression() {
-    size_t size = m_tokens.size();
-    for (size_t s = 0; s < size; s++) {
-        Token * t = m_tokens.back();
-        m_tokens.pop_back();
+    for (Token * t : m_tokens) {
         delete t;
     }
-    // ! Once we deleted the tokens, we must not use the expression object anymore !!
-    // ? Maybe add an integrity check to avoid this ?
+    m_tokens.clear();
+    m_isValid = false;
 }
 
 Expression Lexer::getInput() {
