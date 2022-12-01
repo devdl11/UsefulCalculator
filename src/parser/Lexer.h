@@ -23,12 +23,14 @@ enum TokenType {
     STR_TYPE,
     MATH_TYPE,
     PARENTHESES_TYPE,
+    COMMAND_TYPE, //special type
     INVALID_TYPE
 };
 
 enum TokenMetaType {
     NONE,
     DEPTH,
+    COMMAND,
 };
 
 enum TokenLevel {
@@ -48,6 +50,8 @@ class Token {
         const std::string getString() const { return m_str; };
         TokenType getType() { return m_type; }
         int getIndex() { return m_index; }
+
+        void setType(TokenType t) { m_type = t; }
 
     private:
         int m_index;

@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include <stdexcept>
+#include <map>
 
 #include "Lexer.h"
 #include "../utility/Tools.h"
@@ -18,22 +19,20 @@ namespace {
 
     void upper(std::string s);
     void lower(std::string s);
-    void int_power(int number, int power);
-    void double_power(double number, int power);
-    void double_sqrt(double number);
     
     bool executeCommand(Expression & exp);
 
     bool hasPriority(const char & c);
     OperationType getOperationType(const char & c);
-    double executeOperation(double a, double b, OperationType t);
+    double executeMathOperation(double a, double b, OperationType t);
+    std::string executeStringOperation(std::string a, std::string b, OperationType t);
 }
 
 class Command {
     public:
         Command(std::string name, int argc, std::vector<TokenType> types) : m_name(name), m_argc(argc), m_argTypes(types), m_counter(0), m_canExecute(false) {}
 
-        std::string getName() { return m_name; }
+        const std::string & getName() { return m_name; }
         int getArgc() { return m_argc; }
 
         bool checkArgs(std::vector<Token *> args);
@@ -82,11 +81,15 @@ class Parser {
 
         void addCommand(Command * cmd);
         void parseCommands(std::vector<Token *> & tokens);
-        
         void parseExpression(Expression & exp);
         
     private:
+        bool isCommand(std::string name, size_t * index = nullptr);
+        void scanForCommands(std::vector<Token *> & tokens);
+        void resetScannedCommands(std::vector<Token *> & tokens);
+
         std::vector<Command *> m_commands;
+        std::vector<const std::string *> m_commandsNames;
 
 };
 
