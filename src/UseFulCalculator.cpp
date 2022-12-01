@@ -14,6 +14,7 @@ void init_commands(Parser & parser) {
     parser.addCommand(new Commands::Sqrt()); 
     parser.addCommand(new Commands::Upper());
     parser.addCommand(new Commands::Pow());
+    parser.addCommand(new Commands::Lower());
 }
 
 int main() {

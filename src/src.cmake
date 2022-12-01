@@ -3,7 +3,8 @@ set(SOURCES ${SOURCES}
     parser/commands/sqrt.cpp
     parser/commands/upper.cpp
     parser/commands/pow.cpp
+    parser/commands/lower.cpp
     parser/Lexer.cpp
     parser/Parser.cpp
-    UseFullCalculator.cpp
+    UseFulCalculator.cpp
 )

@@ -7,50 +7,6 @@
 #include "../static/text.h"
 
 namespace {
-    void upper(std::string s) {
-        std::string res;
-        for(char c : s) {
-            res.push_back(ASCII::toUpper(c));
-        }
-        std::cout << res << std::endl;
-    }
-
-    void lower(std::string s) {
-        std::string res;
-        for(char c : s) {
-            res.push_back(ASCII::toLower(c));
-        }
-        std::cout << res << std::endl;
-    }
-
-    bool executeCommand(Expression & ex) {
-        const std::vector<Token *> tokens = ex.getTokens();
-
-        std::string command = tokens.front()->getString();
-        if (command == "upper") {
-            if (tokens.size() < 2) {
-                std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
-                return true;
-            }
-            Token * argument = tokens.at(1);
-            if (argument->getType() == TokenType::STR_TYPE) {
-                upper(argument->getString());
-                return true;
-            }
-        } else if (command == "lower") {
-            if (tokens.size() < 2) {
-                std::cout << TEXT::ERR_FEW_ARGUMENTS << std::endl;
-                return true;
-            }
-            Token * argument = tokens.at(1);
-            if (argument->getType() == TokenType::STR_TYPE) {
-                lower(argument->getString());
-                return true;
-            }
-        } 
-        return false;
-    }
-
     OperationType getOperationType(const char & c) {
         switch (c)
         {
@@ -250,10 +206,6 @@ void Parser::parseExpression(Expression & exp) {
     // We first check if the expression contains a command
     std::vector<Token *> tokens = std::vector<Token *>(exp.getTokens());
     scanForCommands(tokens);
-
-    if(executeCommand(exp)) {
-        return;
-    }
 
     // Let's remove extra math character
     if (tokens.front()->getType() == TokenType::MATH_TYPE) {

@@ -16,12 +16,6 @@ enum OperationType {
 
 namespace {
     // i Here we define our commands
-
-    void upper(std::string s);
-    void lower(std::string s);
-    
-    bool executeCommand(Expression & exp);
-
     bool hasPriority(const char & c);
     OperationType getOperationType(const char & c);
     double executeMathOperation(double a, double b, OperationType t);

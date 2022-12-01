@@ -4,5 +4,6 @@
 #include "sqrt.h"
 #include "upper.h"
 #include "pow.h"
+#include "lower.h"
 
 #endif
